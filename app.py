@@ -23,14 +23,18 @@ ddbTable = boto3.resource('dynamodb').Table('malwareURL')
 # Provides health check
 @app.route('/')
 def index():
-    return {'Availability': 'Hello World I am up and running, can respond respond to your request'}
+    return  """
+                Hello World I am up and running, can respond to your requests
+                Send query as below example: 
+                https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.co.in/news 
+            """
     
     
 '''
 Below function will check if the provided request can be allowed or denied 
 It looks for the query paramaters and serch for the query key "url"
 
-Sample query link can look like http://<urlLookUpService_dnsName>/urlLookUp?url=http://www.google.co.in/news
+Sample query  can look like https://URLLookUpServiceDNSName/api/urlLookUp?url=http://www.google.co.in/news
 So below function will check if www.google.co.in is allowed or denied
 '''
 
@@ -68,8 +72,6 @@ def urlLookup():
         raise Exception("Exception received from DDB" + str(e))
     
     
-    
-    
 '''
 Checks if 'url' is passed as query paramater
 else raise bad request exception
@@ -80,16 +82,20 @@ def queryParametersValidation(current_request):
     
     if (queryParametersDict==None):
         print("query parameters not passed") 
-        raise BadRequestError( """query parameters are not passed. 
-                      Send query as below example
-                      http://urlLookUpService_dnsName/urlLookUp?url=http://www.google.co.in/news""")
+        raise BadRequestError("""
+                Query parameters are not passed 
+                Send query as below example: 
+                 https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.co.in/news 
+             """)
         
     else :
         if( ('url' not in queryParametersDict)):
             print(queryParametersDict)
-            raise BadRequestError( """query parameters does not contain query key 'url'. 
-                      Send query as below example
-                      http://urlLookUpService_dnsName/urlLookUp?url=http://www.google.co.in/news""")
+            raise BadRequestError("""
+                Query parameters does not contain query key 'url'
+                Send query as below example: 
+                 https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.co.in/news 
+             """)
         else : 
             return True
             
@@ -104,9 +110,11 @@ def getDomainName(urlToCheck):
     parseURL = urlparse(urlToCheck)
     if (  parseURL.netloc == "" ):
         print("Received URL is " + urlToCheck)
-        raise BadRequestError( """url parameter value is not valid'. 
-                      Send query as below example
-                      http://urlLookUpService_dnsName/urlLookUp?url=http://www.google.co.in/news""")
+        raise BadRequestError("""
+                'url'  query parameter value is not valid 
+                Send query as below example: 
+                 https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.co.in/news 
+             """)
     else :
         return parseURL.netloc
          
