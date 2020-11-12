@@ -69,4 +69,5 @@ is not of the form *http://somedomain.in/index*
 * use env variables instead of hardcoding the ddb table name
 * user friendly dns name rather than ciq51uqa3d.execute-api.us-east-2.amazonaws.com
 * Create the pipeline and it is very simple if we are using **Chalice**
+* As per current solution, there is no cache mechanism and every time we get a request it checks for data in DDB, at enterprise level it will definitely cause latency issues so it is better to have an some kind of cache solution
 
