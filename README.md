@@ -1,16 +1,19 @@
+### Disclaimer !!!!
+!!!! This code works but it is not suitable for production in current form, I created this just for knowledge purpose. 
+
 ### Problem Statement
-Sample webservice to check if given url is malware or not
+Sample webservice to check if given url is malware or not.
 
 #### FrameWork used 
 
-Chalice : https://aws.github.io/chalice/quickstart.html 
+**Chalice** : https://aws.github.io/chalice/quickstart.html 
 
-Chalice is an AWS opensource framework to create python serverless apps. It automatically created Lambda, API Gateway and related IAM Roles , all you need to do is use the command 
-"chalice deploy" :)
+* Chalice is an AWS opensource framework to create python serverless apps. It automatically created Lambda, API Gateway and related IAM Roles , all you need to do is use the command "chalice deploy" :)
+* Most of the modules available is chalice are similar to Flask
 
-#### How this service works?
+#### How to access service works?
 
-When some one makes a GET request to this service, it will check if the domain in URL (which is passed as query parameter) , can be allowed to make a http connection or not.
+When some one makes a **GET request** to this service, it will check if the domain in URL (which is passed as query parameter) , can be allowed to make a http connection or not.
 
 Eg : https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.com/news  --> when you try to access this link,
 it will tell us if www.google.com is malware or not ( I simply made www.google.com as malware :)
@@ -40,9 +43,8 @@ parameter 'url' as first 2 examples
 is not of the form *http://somedomain.in/index*
 
 
-
-
 #### further improments :
 * render output in html format
 * use env variables instead of hardcoding the ddb table name
 * user friendly dns name rather than ciq51uqa3d.execute-api.us-east-2.amazonaws.com
+* Create the pipeline and it is very simple if we are using **Chalice**
