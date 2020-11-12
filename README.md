@@ -8,7 +8,7 @@ Sample webservice to check if given url is malware or not.
 
 **Chalice** : https://aws.github.io/chalice/quickstart.html 
 
-* Chalice is an AWS opensource framework to create python serverless apps. It automatically created Lambda, API Gateway and related IAM Roles , all you need to do is use the command "chalice deploy" :)
+* Chalice is an AWS opensource framework to create python serverless apps. It automatically created Lambda, API Gateway and related IAM Roles , all you need to do is use the command ***"chalice deploy"*** :)
 * Most of the modules available is chalice are similar to Flask
 
 #### How to access service works?

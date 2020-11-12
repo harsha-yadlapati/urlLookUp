@@ -2,9 +2,7 @@ from chalice import Chalice
 from chalice import BadRequestError
 from urllib.parse import urlparse
 import boto3
-
-
-
+#from src.app import app
 
 # Intiate chalice app
 # refer https://aws.github.io/chalice/quickstart.html 
@@ -36,6 +34,10 @@ It looks for the query paramaters and serch for the query key "url"
 
 Sample query  can look like https://URLLookUpServiceDNSName/api/urlLookUp?url=http://www.google.co.in/news
 So below function will check if www.google.co.in is allowed or denied
+
+Reference for request metadata
+https://aws.github.io/chalice/api.html#request
+https://aws.github.io/chalice/tutorials/basicrestapi.html#request-metadata
 '''
 
 @app.route('/urlLookUp')
@@ -55,9 +57,7 @@ def urlLookup():
      
      Consideration : malwareURL table contains the list of domain names which should be denied connection, 
      so if a domin name is not present, it means it is safe to establish connection to that domain 
-     
     '''
-    
     try:
         response = ddbTable.get_item(
         Key = {
@@ -81,7 +81,8 @@ def queryParametersValidation(current_request):
     queryParametersDict = current_request.query_params
     
     if (queryParametersDict==None):
-        print("query parameters not passed") 
+        app.log.error("Query parameters not passed")
+        #print("Query parameters not passed") 
         raise BadRequestError("""
                 Query parameters are not passed 
                 Send query as below example: 
@@ -90,7 +91,10 @@ def queryParametersValidation(current_request):
         
     else :
         if( ('url' not in queryParametersDict)):
-            print(queryParametersDict)
+            #print("Query parameters does not contain query key 'url' below is the dict of queryParameters")
+            app.log.error("Query parameters does not contain query key 'url' below is the dict of queryParameters")
+            #print(queryParametersDict)
+            app.log.info(queryParametersDict)
             raise BadRequestError("""
                 Query parameters does not contain query key 'url'
                 Send query as below example: 
@@ -109,7 +113,8 @@ def getDomainName(urlToCheck):
     # refer https://docs.python.org/3/library/urllib.parse.html to know more about urlparse
     parseURL = urlparse(urlToCheck)
     if (  parseURL.netloc == "" ):
-        print("Received URL is " + urlToCheck)
+        #print("Received URL is " + urlToCheck)
+        app.log.error("Received URL is " + urlToCheck)
         raise BadRequestError("""
                 'url'  query parameter value is not valid 
                 Send query as below example: 
