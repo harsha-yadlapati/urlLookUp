@@ -44,14 +44,14 @@ is not of the form *http://somedomain.in/index*
 
 #### Local testing
 
-*** Initial setup ***
+***Initial setup***
 * gh repo clone harsha-yadlapati/urlLookUp --> pull code from git repo
 * pip install httpie --> install **httpe** to make http requests instead of using curl
 * python3 -m pip install chalice --> Install chalice
 * python3 -m venv <venvname> --> create virtual env for python
 * . <venvname>/bin/activate --> activate virtual env
   
-*** Chalice local server ***
+***Chalice local server***
 * cd urlLookUp 
 * chalice local --> this command should be run from root folder of urlLookUp repo 
 * from above command you will have local server running at http://localhost:8000
@@ -60,7 +60,7 @@ is not of the form *http://somedomain.in/index*
   * http http://localhost:8000/urlLookUp?query1=http://www.google.co.in/news --> response code 400
   * tryout other links mentioned above under testing by using localhost
 
-*** Run unit test cases ***
+***Run unit test cases***
 * "pip install pytest"
 * "pytest -s test/test_app.py" (-s gives more logging info and this test should be run from urlLookUp repo)
 
