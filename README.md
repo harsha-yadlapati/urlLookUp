@@ -31,8 +31,8 @@ value and test if urls domain is allowed or denied based on ddb info
 
 
 
-#### testing: 
-most probably this lambda will be removed by the time you access it :) ,  but can try below examples :)   (!!!! allow or deny is just based on what I set in DDb , noboday want to deny google :))
+#### Testing: 
+This lambda will be avilable till end of NOV 2020, can try below examples :)   (!!!! allow or deny is just based on what I set in DDb , noboday want to deny google.co.in :))
 
 * https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.com/news --> the response will be Allowed 
 * https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=http://www.google.co.in/news --> the response will be Denied
@@ -42,9 +42,31 @@ parameter 'url' as first 2 examples
 * https://ciq51uqa3d.execute-api.us-east-2.amazonaws.com/api/urlLookUp?url=www.google.co.in/news --> the response will be BadRequest as the value of query parameter 'url' 
 is not of the form *http://somedomain.in/index*
 
+#### Local testing
 
-#### further improments :
+*** Initial setup ***
+* gh repo clone harsha-yadlapati/urlLookUp --> pull code from git repo
+* pip install httpie --> install **httpe** to make http requests instead of using curl
+* python3 -m pip install chalice --> Install chalice
+* python3 -m venv <venvname> --> create virtual env for python
+* . <venvname>/bin/activate --> activate virtual env
+  
+*** Chalice local server ***
+* cd urlLookUp 
+* chalice local --> this command should be run from root folder of urlLookUp repo 
+* from above command you will have local server running at http://localhost:8000
+* now test the service like below (**note : you are using http command below**)
+  * http http://localhost:8000/urlLookUp?url=http://www.google.co.in/news --> response code 200
+  * http http://localhost:8000/urlLookUp?query1=http://www.google.co.in/news --> response code 400
+  * tryout other links mentioned above under testing by using localhost
+
+*** Run unit test cases ***
+* "pip install pytest"
+* "pytest -s test/test_app.py" (-s gives more logging info and this test should be run from urlLookUp repo)
+
+#### Further improments :
 * render output in html format
 * use env variables instead of hardcoding the ddb table name
 * user friendly dns name rather than ciq51uqa3d.execute-api.us-east-2.amazonaws.com
 * Create the pipeline and it is very simple if we are using **Chalice**
+
